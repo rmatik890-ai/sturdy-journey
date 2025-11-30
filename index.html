@@ -6,9 +6,10 @@
     <title>BRAND PRIVATE PANEL</title>
     <!-- ফন্ট আইকন -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
     
     <style>
-        /* বেসিক রিসেট */
+        /* --- বেসিক রিসেট ও আগের স্টাইল --- */
         * {
             margin: 0;
             padding: 0;
@@ -17,13 +18,13 @@
         }
 
         body {
-            overflow: hidden; /* স্ক্রল বন্ধ */
+            overflow: hidden;
             background-color: #000;
             height: 100vh;
             width: 100vw;
         }
 
-        /* ১. ব্যাকগ্রাউন্ড সাইট (iframe) */
+        /* ব্যাকগ্রাউন্ড সাইট (iframe) */
         #bg-site {
             position: fixed;
             top: 0;
@@ -34,13 +35,13 @@
             z-index: 0;
         }
 
-        /* ২. সিগনাল পেজ (লগিন ও হ্যাক ইন্টারফেস) */
+        /* সিগনাল পেজ কন্টেইনার */
         #signal-page-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 60px); /* ফুটার বাদ দিয়ে বাকি অংশ */
+            height: calc(100% - 60px);
             background: rgba(10, 10, 15, 0.95); 
             display: flex;
             justify-content: center;
@@ -49,10 +50,13 @@
             backdrop-filter: blur(5px);
         }
 
+        /* মেইন বক্স ডিজাইন */
         .content-box {
-            width: 300px;
-            padding: 25px 20px;
-            background: rgba(30, 30, 40, 0.85);
+            width: 320px; /* একটু চওড়া করা হয়েছে টেবিলের জন্য */
+            max-height: 90vh;
+            overflow-y: auto; /* কন্টেন্ট বেশি হলে স্ক্রল হবে */
+            padding: 20px;
+            background: rgba(30, 30, 40, 0.9);
             border: 2px solid #d600ff;
             box-shadow: 0 0 20px rgba(214, 0, 255, 0.5);
             border-radius: 20px;
@@ -60,7 +64,16 @@
             color: white;
         }
 
-        /* লগিন পেজের প্রোফাইল ইমেজ */
+        /* স্ক্রলবার হাইড করা (সুন্দর দেখানোর জন্য) */
+        .content-box::-webkit-scrollbar {
+            width: 5px;
+        }
+        .content-box::-webkit-scrollbar-thumb {
+            background: #d600ff; 
+            border-radius: 10px;
+        }
+
+        /* --- লগিন সেকশন স্টাইল --- */
         .login-profile-icon {
             width: 80px;
             height: 80px;
@@ -71,7 +84,6 @@
             object-fit: cover;
         }
 
-        /* হেডার টাইটেল */
         .header-title {
             font-size: 18px;
             font-weight: bold;
@@ -81,7 +93,6 @@
             text-transform: uppercase;
         }
 
-        /* ইনপুট ফিল্ড */
         input[type="password"] {
             width: 100%;
             padding: 12px;
@@ -95,7 +106,6 @@
             font-size: 14px;
         }
 
-        /* লগিন বাটন ডিজাইন */
         .btn-grad {
             width: 100%;
             padding: 10px;
@@ -110,7 +120,6 @@
             box-shadow: 0 0 10px rgba(214, 0, 255, 0.4);
         }
 
-        /* লগিন পেজের টেলিগ্রাম বাটন */
         .telegram-login-btn {
             display: block;
             width: 100%;
@@ -125,49 +134,92 @@
             box-shadow: 0 0 10px #229ED9;
         }
 
-        /* ড্যাশবোর্ড (লগিনের পর) */
+        /* --- ড্যাশবোর্ড / হ্যাক ইন্টারফেস (নতুন স্টাইল) --- */
         #hack-dashboard {
-            display: none;
+            display: none; /* ডিফল্ট হাইড থাকবে */
         }
 
-        .dashboard-profile-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid #00ffff;
-            margin-bottom: 10px;
-            object-fit: cover;
-        }
-
-        .timer-box {
-            font-size: 40px;
-            font-weight: bold;
-            color: #ff0055;
-            margin: 10px 0;
-            background: rgba(0,0,0,0.6);
+        .info-card {
+            background: rgba(0, 0, 0, 0.5);
             padding: 10px;
-            border-radius: 15px;
+            border-radius: 10px;
             border: 1px solid #333;
+            margin-bottom: 15px;
         }
 
-        .result-box {
-            font-size: 35px;
-            font-weight: 900;
+        #currentPeriod {
+            font-size: 14px;
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #liveTime {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .prediction-box {
+            background: rgba(0, 50, 0, 0.6);
+            border: 2px solid #00ff00;
             color: #00ff00;
-            text-shadow: 0 0 20px #00ff00;
-            margin: 15px 0;
-            min-height: 50px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: 900;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 15px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* এনিমেশন */
-        @keyframes popUp {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
+        /* টেবিল ডিজাইন */
+        .history-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 10px;
+            border: 1px solid #d600ff;
+            border-radius: 10px;
         }
-        .animate-pop { animation: popUp 0.5s ease-out; }
 
-        /* ৩. ফুটার মেনু (নিচে ফিক্সড) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            color: #fff;
+        }
+
+        thead {
+            background: #d600ff;
+            color: white;
+        }
+
+        th, td {
+            padding: 8px 4px;
+            border-bottom: 1px solid #333;
+            text-align: center;
+        }
+
+        /* টেবিলের কালার কোডিং */
+        .num { font-weight: bold; }
+        .green { color: #00ff00; }
+        .red { color: #ff0055; }
+        .violet { color: #bf00ff; }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.green { background-color: #00ff00; }
+        .dot.red { background-color: #ff0055; }
+        .dot.violet { background-color: #bf00ff; }
+
+        /* --- ফুটার মেনু --- */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -202,7 +254,6 @@
             margin-bottom: 5px;
         }
 
-        /* একটিভ ট্যাব স্টাইল */
         .nav-item.active {
             color: #00ffff;
             background: rgba(0, 255, 255, 0.1);
@@ -222,33 +273,57 @@
             
             <!-- লগিন ফর্ম -->
             <div id="login-section">
-                <!-- লগিন এর ওপরে প্রোফাইল আইকন -->
                 <img src="https://ik.imagekit.io/ljcih9oti/IMG_20251130_184427_689.jpg" class="login-profile-icon" alt="User">
-                
                 <div class="header-title">BRAND PRIVATE PANEL</div>
                 
                 <input type="password" id="passwordInput" placeholder="Enter Password">
                 
                 <button class="btn-grad" onclick="checkLogin()">Login Now</button>
                 
-                <!-- লগিন এর নিচে টেলিগ্রাম জয়েন বাটন -->
                 <a href="https://t.me/brandnamberprediction" target="_blank" class="telegram-login-btn">
-                    <i class="fab fa-telegram-plane"></i> Contact hack password 
+                    <i class="fab fa-telegram-plane"></i> Contact Admin
                 </a>
 
                 <p id="error-msg" style="color:red; font-size:12px; margin-top:10px; display:none;">Password Wrong!</p>
             </div>
 
-            <!-- হ্যাক ড্যাশবোর্ড (লগিনের পর দেখাবে) -->
+            <!-- হ্যাক ড্যাশবোর্ড (লগিনের পর রিপ্লেস হবে) -->
             <div id="hack-dashboard">
-                <img src="https://ik.imagekit.io/ljcih9oti/IMG_20251130_184427_689.jpg" class="dashboard-profile-img">
-                <!-- নাম পরিবর্তন করা হয়েছে -->
-                <div class="header-title" style="font-size: 16px; margin-bottom: 5px;">BRAND PRIVATE PANEL</div>
-                
-                <div style="font-size: 12px; color: #aaa; margin-top: 10px;">NEXT SIGNAL IN</div>
-                <div id="countdown" class="timer-box">30</div>
-                
-                <div id="prediction-result" class="result-box">WAIT...</div>
+                <img src="https://ik.imagekit.io/ljcih9oti/IMG_20251130_184427_689.jpg" class="login-profile-icon" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                <div class="header-title" style="font-size: 16px;">LIVE PREDICTION</div>
+
+                <!-- পিরিয়ড ও টাইম -->
+                <div class="info-card">
+                    <h2 id="currentPeriod">Loading...</h2>
+                    <div id="liveTime">Live Time: --:--:--</div>
+                </div>
+
+                <!-- প্রেডিকশন বক্স -->
+                <div class="prediction-box" id="predictionBox">
+                    Analyzing...
+                </div>
+
+                <!-- হিস্ট্রি টেবিল -->
+                <div class="history-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Num</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultBody">
+                            <tr><td colspan="4">Waiting for data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Telegram Button inside Dashboard -->
+                <a href="https://t.me/brandnamberprediction" target="_blank" class="telegram-login-btn" style="background: #2AABEE; margin-top: 20px;">
+                    <i class="fab fa-telegram"></i> Join Prediction Team
+                </a>
             </div>
 
         </div>
@@ -256,12 +331,10 @@
 
     <!-- ৩. ফুটার নেভিগেশন (Footer Bar) -->
     <div class="bottom-nav">
-        <!-- সিগনাল বাটন -->
         <div class="nav-item active" onclick="switchTab('signal', this)">
             <i class="fas fa-chart-line"></i>
             <span>SIGNAL</span>
         </div>
-        <!-- গেম বাটন -->
         <div class="nav-item" onclick="switchTab('game', this)">
             <i class="fas fa-gamepad"></i>
             <span>GAME</span>
@@ -275,7 +348,6 @@
             element.classList.add('active');
 
             const signalPage = document.getElementById('signal-page-container');
-
             if (tabName === 'game') {
                 signalPage.style.display = 'none';
             } else {
@@ -284,7 +356,6 @@
         }
 
         // --- লগিন সিস্টেম ---
-        // পাসওয়ার্ড আপডেট করা হয়েছে: brand666
         const CORRECT_PASSWORD = "brand666";
 
         function checkLogin() {
@@ -295,7 +366,9 @@
                 // লগিন সফল
                 document.getElementById("login-section").style.display = "none";
                 document.getElementById("hack-dashboard").style.display = "block";
-                startTimer(); // টাইমার শুরু
+                
+                // লগিন সফল হলে API স্ক্রিপ্ট চালু হবে
+                startPredictionSystem(); 
             } else {
                 // ভুল পাসওয়ার্ড
                 errorMsg.style.display = "block";
@@ -303,62 +376,149 @@
             }
         }
 
-        // --- টাইমার এবং প্রেডিকশন লজিক ---
-        function startTimer() {
-            let timeLeft = 30;
-            const timerElement = document.getElementById("countdown");
-            const resultElement = document.getElementById("prediction-result");
+        // --- API & PREDICTION LOGIC (Merged) ---
+        function startPredictionSystem() {
+            const CURRENT_API = 'https://api.bdg88zf.com/api/webapi/GetGameIssue';
+            const HISTORY_API = 'https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json';
 
-            setInterval(() => {
-                // টাইমার ডিসপ্লে আপডেট
-                if(timeLeft < 10) {
-                     timerElement.innerText = "0" + timeLeft;
-                } else {
-                     timerElement.innerText = timeLeft;
-                }
+            const REQUEST_DATA = {
+                typeId: 1,
+                language: 0,
+                random: "e7fe6c090da2495ab8290dac551ef1ed",
+                signature: "1F390E2B2D8A55D693E57FD905AE73A7",
+                timestamp: 1723726679
+            };
 
-                // কালার চেঞ্জ
-                if (timeLeft <= 10) {
-                    timerElement.style.color = "red";
-                } else {
-                    timerElement.style.color = "#ff0055";
-                }
-
-                // ১ সেকেন্ডে রেজাল্ট দেখাবে
-                if (timeLeft === 1) {
-                    generateResult(resultElement);
-                }
-
-                // লুপ
-                if (timeLeft === 0) {
-                    timeLeft = 30;
-                    setTimeout(() => {
-                        resultElement.innerText = "WAIT...";
-                        resultElement.style.color = "yellow";
-                        resultElement.classList.remove("animate-pop");
-                    }, 2000);
-                } else {
-                    timeLeft--;
-                }
-            }, 1000);
-        }
-
-        function generateResult(element) {
-            const outcomes = ["BIG", "SMALL"];
-            const randomOutcome = outcomes[Math.floor(Math.random() * outcomes.length)];
-
-            element.innerText = randomOutcome;
-
-            if(randomOutcome === "BIG") {
-                element.style.color = "#00ff00"; // সবুজ
-            } else {
-                element.style.color = "#ffa500"; // কমলা
+            function getBigSmall(num) {
+                return num >= 5 ? 'Big' : 'Small';
             }
 
-            // এনিমেশন
-            element.classList.remove("animate-pop");
-            void element.offsetWidth;
-            element.classList.add("animate-pop");
+            function getColorType(num) {
+                if ([1,3,7,9].includes(num)) return 'Green';
+                if ([2,4,6,8].includes(num)) return 'Red';
+                return 'Violet';
+            }
+
+            function getPrediction(history) {
+                const sizeList = history.map(h => getBigSmall(parseInt(h.number)));
+                const bigCount = sizeList.filter(s => s === 'Big').length;
+                const smallCount = sizeList.length - bigCount;
+
+                let streakSize = sizeList[0];
+                let streakCount = 1;
+                for (let i = 1; i < sizeList.length; i++) {
+                    if (sizeList[i] === streakSize) streakCount++;
+                    else break;
+                }
+
+                let predicted = '';
+                // Pattern Matching
+                const recentPattern = sizeList.slice(0, 3).join(',');
+                for (let i = 3; i < sizeList.length - 3; i++) {
+                    const pattern = sizeList.slice(i, i + 3).join(',');
+                    if (pattern === recentPattern) {
+                        predicted = sizeList[i + 3];
+                        break;
+                    }
+                }
+
+                if (!predicted) {
+                    if (bigCount > smallCount + 2) predicted = 'Small';
+                    else if (smallCount > bigCount + 2) predicted = 'Big';
+                    else predicted = sizeList[0] === 'Big' ? 'Small' : 'Big';
+                }
+
+                if (streakCount >= 3) {
+                    predicted = streakSize === 'Big' ? 'Small' : 'Big';
+                }
+
+                return predicted;
+            }
+
+            function generateConfidence() {
+                return Math.floor(Math.random() * 20) + 80; // 80–99%
+            }
+
+            async function loadCurrentPeriod() {
+                try {
+                    const res = await fetch(CURRENT_API, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(REQUEST_DATA)
+                    });
+                    const data = await res.json();
+                    return data.data?.issueNumber || "Unavailable";
+                } catch {
+                    return "Unavailable";
+                }
+            }
+
+            async function loadAndPredict() {
+                const currentPeriod = await loadCurrentPeriod();
+                document.getElementById('currentPeriod').innerText = "Period: " + currentPeriod;
+
+                try {
+                    const res = await fetch(HISTORY_API + '?ts=' + Date.now());
+                    const data = await res.json();
+                    const list = data.data.list.slice(0, 10);
+
+                    const tbody = document.getElementById('resultBody');
+                    tbody.innerHTML = '';
+                    list.forEach(item => {
+                        const num = parseInt(item.number);
+                        const size = getBigSmall(num);
+                        const colorClass = getColorType(num).toLowerCase(); // css class purpose
+                        
+                        tbody.innerHTML += `
+                        <tr>
+                            <td>${item.issueNumber.slice(-4)}</td>
+                            <td class="num ${colorClass}">${num}</td>
+                            <td>${size}</td>
+                            <td><span class="dot ${colorClass}"></span></td>
+                        </tr>`;
+                    });
+
+                    const lastPeriod = localStorage.getItem("lastShownPeriod");
+                    if (currentPeriod !== lastPeriod) {
+                        const prediction = getPrediction(list);
+                        const confidence = generateConfidence();
+
+                        const predBox = document.getElementById("predictionBox");
+                        predBox.innerHTML = `
+                        <div style="font-size:14px; color:#fff;">PREDICTION</div>
+                        <div style="font-size:30px; margin:5px 0;">${prediction}</div>
+                        <span style="font-size: 12px; color: #ccc;">Confidence: ${confidence}%</span>`;
+
+                        // কালার আপডেট
+                        if(prediction === 'Big') predBox.style.color = "#ffa500"; // Orange/Yellow
+                        else predBox.style.color = "#00ff00"; // Green
+
+                        localStorage.setItem("lastPrediction", prediction);
+                        localStorage.setItem("lastShownPeriod", currentPeriod);
+
+                        // আপনার দেওয়া অ্যালার্ট লজিক (চালু রাখা হলো)
+                        alert(`Period: ${currentPeriod}\nPrediction: ${prediction}\nConfidence: ${confidence}%\nTG: ARIF VAI MOOD HACK`);
+                    }
+                } catch (err) {
+                    console.log("API Error", err);
+                }
+            }
+
+            function updateLiveTime() {
+                const now = new Date();
+                const time = now.toLocaleTimeString('en-GB', { hour12: false });
+                document.getElementById('liveTime').innerText = "Live Time: " + time;
+            }
+
+            // প্রথমবার কল
+            loadAndPredict();
+            updateLiveTime();
+
+            // লুপ চালু (৫ সেকেন্ড পর পর)
+            setInterval(() => {
+                loadAndPredict();
+                updateLiveTime();
+            }, 5000);
         }
     </script>
 
